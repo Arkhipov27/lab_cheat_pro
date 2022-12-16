@@ -1,0 +1,247 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lab_cheat.table &#8212; Lab_cheat 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Lab_cheat 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">lab_cheat.table</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for lab_cheat.table</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">tkinter</span> <span class="k">as</span> <span class="nn">tk</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="kn">import</span> <span class="n">printable</span> <span class="k">as</span> <span class="n">english_symbols</span>
+<span class="kn">from</span> <span class="nn">typing</span> <span class="kn">import</span> <span class="n">List</span><span class="p">,</span> <span class="n">Tuple</span>
+
+<span class="kn">from</span> <span class="nn">.var</span> <span class="kn">import</span> <span class="n">Var</span><span class="p">,</span> <span class="n">GroupVar</span><span class="p">,</span> <span class="n">digital_normalize_tuple</span>
+
+
+<div class="viewcode-block" id="rus_tex_formula"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.table.rus_tex_formula">[docs]</a><span class="k">def</span> <span class="nf">rus_tex_formula</span><span class="p">(</span><span class="n">formula</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method turns tex-formula into russian language</span>
+
+<span class="sd">    :param formula: tex-formula</span>
+<span class="sd">    :return: russian interpretation</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ret</span><span class="p">,</span> <span class="n">rus_now</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">formula</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">rus_now</span> <span class="ow">is</span> <span class="p">(</span><span class="n">char</span> <span class="ow">in</span> <span class="n">english_symbols</span><span class="p">):</span>
+            <span class="n">ret</span> <span class="o">+=</span> <span class="p">{</span><span class="kc">True</span><span class="p">:</span> <span class="s1">&#39;}&#39;</span><span class="p">,</span> <span class="kc">False</span><span class="p">:</span> <span class="s1">&#39;</span><span class="se">\\</span><span class="s1">text{&#39;</span><span class="p">}[</span><span class="n">rus_now</span><span class="p">]</span>
+            <span class="n">rus_now</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">rus_now</span>
+        <span class="n">ret</span> <span class="o">+=</span> <span class="n">char</span>
+    <span class="k">if</span> <span class="n">rus_now</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span> <span class="n">ret</span> <span class="o">+=</span> <span class="s1">&#39;}&#39;</span>
+    <span class="k">return</span> <span class="n">ret</span></div>
+
+
+<div class="viewcode-block" id="to_table"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.table.to_table">[docs]</a><span class="k">def</span> <span class="nf">to_table</span><span class="p">(</span><span class="n">Excel</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">transpose</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">float</span><span class="p">]]:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This method translates excel-file to table</span>
+
+<span class="sd">    :param Excel: a string consisting from array of data</span>
+<span class="sd">    :param transpose: parameter to transpose the table to list of tuples</span>
+
+<span class="sd">    :return: list of values from excel-file</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">table</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">),</span> <span class="n">Excel</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)))[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">transpose</span><span class="p">:</span> <span class="n">table</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">table</span><span class="p">))</span>
+    <span class="k">return</span> <span class="p">[[</span><span class="nb">float</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">])</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">))</span> <span class="k">if</span> <span class="n">table</span><span class="p">[</span><span class="n">j</span><span class="p">][</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="s1">&#39;&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">table</span><span class="p">[</span><span class="mi">0</span><span class="p">]))]</span></div>
+
+
+<div class="viewcode-block" id="TexTable"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.table.TexTable">[docs]</a><span class="k">class</span> <span class="nc">TexTable</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This class is made to build and show tex-tables from array of data</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">Tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">],</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+
+<div class="viewcode-block" id="TexTable.add"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.table.TexTable.add">[docs]</a>    <span class="k">def</span> <span class="nf">add</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">group_var</span><span class="p">:</span> <span class="n">GroupVar</span><span class="p">,</span> <span class="n">title</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">show_err</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method adds values and errors to the table</span>
+
+<span class="sd">        :param group_var: the variable that we want to add to the table</span>
+<span class="sd">        :param title: title of columns</span>
+<span class="sd">        :param show_err: parameter to show errors in the table</span>
+
+<span class="sd">        :return: the table</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">values</span><span class="p">,</span> <span class="n">errors</span> <span class="o">=</span> <span class="n">group_var</span><span class="o">.</span><span class="n">val_err</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">digital_normalize_tuple</span><span class="p">(</span><span class="n">Var</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">])</span>
+                                   <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">group_var</span><span class="p">))))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">title</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">show_err</span> <span class="ow">is</span> <span class="kc">True</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">digital_normalize_tuple</span><span class="p">(</span><span class="n">Var</span><span class="p">(</span><span class="n">values</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">errors</span><span class="p">[</span><span class="n">i</span><span class="p">]))[</span><span class="mi">1</span><span class="p">])</span>
+                                       <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">group_var</span><span class="p">))))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\\</span><span class="s1">Delta &#39;</span> <span class="o">+</span> <span class="n">title</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span></div>
+
+<div class="viewcode-block" id="TexTable.show"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.table.TexTable.show">[docs]</a>    <span class="k">def</span> <span class="nf">show</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numerate</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">colours</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;C0C0C0&#39;</span><span class="p">,</span> <span class="s1">&#39;EFEFEF&#39;</span><span class="p">,</span> <span class="s1">&#39;C0C0C0&#39;</span><span class="p">),</span> <span class="n">table</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">floatrow</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+             <span class="n">color_frequency</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        This method shows the table in tkinter-window. To copy the content hold Ctrl+A and Ctrl+C.</span>
+
+<span class="sd">        :param numerate: to numerate strings in the table</span>
+<span class="sd">        :param colours: colours that are displayed in the table</span>
+<span class="sd">        :param table: to set table-environment in the table. Default is center-environment</span>
+<span class="sd">        :param floatrow: to accommodate some tables in the row</span>
+<span class="sd">        :param color_frequency: frequency of the colours</span>
+
+<span class="sd">        :return: the table in tkinter-window</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">numerate</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_numerating</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">table</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_tk_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_begin_table</span><span class="p">(</span><span class="n">floatrow</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_titles</span><span class="p">(</span><span class="n">colours</span><span class="p">)</span> <span class="o">+</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_numbers</span><span class="p">(</span><span class="n">numerate</span><span class="p">,</span> <span class="n">colours</span><span class="p">,</span> <span class="n">color_frequency</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_table</span><span class="p">(</span><span class="n">floatrow</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_show_tk_window</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_begin_center</span><span class="p">(</span><span class="n">floatrow</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_write_titles</span><span class="p">(</span><span class="n">colours</span><span class="p">)</span> <span class="o">+</span>
+                                 <span class="bp">self</span><span class="o">.</span><span class="n">_write_numbers</span><span class="p">(</span><span class="n">numerate</span><span class="p">,</span> <span class="n">colours</span><span class="p">,</span> <span class="n">color_frequency</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_end_center</span><span class="p">(</span><span class="n">floatrow</span><span class="p">))</span></div>
+
+    <span class="k">def</span> <span class="nf">_numerating</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39; &#39;</span><span class="p">]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span>
+        <span class="n">max_num</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span> <span class="o">=</span> <span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">max_num</span><span class="o">+</span><span class="mi">1</span><span class="p">))]</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span>
+
+    <span class="k">def</span> <span class="nf">_begin_center</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">floatrow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">floatrow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="s2"> </span><span class="se">\\</span><span class="s2">Topfloatboxes </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">textbf{Таблица } </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{floatrow}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{tabular}</span><span class="s2">{|&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;c|&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{center}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">textbf{Таблица } </span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{tabular}</span><span class="s2">{|&quot;</span><span class="o">+</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;c|&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_begin_table</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">floatrow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">floatrow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{table}</span><span class="s2"> </span><span class="se">\\</span><span class="s2">Topfloatboxes </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">caption{Таблица } </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{floatrow}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{tabular}</span><span class="s2">{|&quot;</span><span class="o">+</span><span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;c|&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{table}</span><span class="s2"> </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">caption{Таблица } </span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">begin</span><span class="si">{tabular}</span><span class="s2">{|&quot;</span> <span class="o">+</span> <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39;c|&#39;</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">))</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_write_titles</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">colours</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">hline</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">rowcolor[HTML]{&quot;</span> <span class="o">+</span> <span class="n">colours</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="s1">&#39; $&#39;</span> <span class="o">+</span> <span class="n">rus_tex_formula</span><span class="p">(</span><span class="n">title</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39;$ &amp;&#39;</span> <span class="k">for</span> <span class="n">title</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">])[:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\\\\</span><span class="s2"> </span><span class="se">\\</span><span class="s2">hline</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="k">def</span> <span class="nf">_write_numbers</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">numerate</span><span class="p">,</span> <span class="n">colours</span><span class="p">,</span> <span class="n">color_frequency</span><span class="p">):</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">for</span> <span class="n">string</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">max</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="p">))):</span>
+            <span class="n">result</span> <span class="o">+=</span> <span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">rowcolor[HTML]{&quot;</span> <span class="o">+</span> <span class="n">colours</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="p">(</span><span class="n">string</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">color_frequency</span> <span class="o">==</span> <span class="mi">0</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="o">+</span> \
+                      <span class="p">(</span><span class="s2">&quot;</span><span class="se">\\</span><span class="s2">cellcolor[HTML]{&quot;</span> <span class="o">+</span> <span class="n">colours</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&quot;} &quot;</span> <span class="k">if</span> <span class="n">numerate</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">column</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_titles</span><span class="p">)):</span>
+                <span class="n">result</span> <span class="o">+=</span> <span class="n">_safe_get</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_numbers</span><span class="p">[</span><span class="n">column</span><span class="p">],</span> <span class="n">string</span><span class="p">,</span> <span class="s1">&#39; &#39;</span><span class="p">)</span> <span class="o">+</span> <span class="s1">&#39; &amp; &#39;</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">result</span><span class="p">[:</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s1">&#39;</span><span class="se">\\\\</span><span class="s1"> </span><span class="se">\\</span><span class="s1">hline</span><span class="se">\n</span><span class="s1">&#39;</span>
+        <span class="k">return</span> <span class="n">result</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_end_center</span><span class="p">(</span><span class="n">floatrow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">floatrow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{tabular}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{floatrow}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;\end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{tabular}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;\end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_end_table</span><span class="p">(</span><span class="n">floatrow</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">floatrow</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{tabular}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{floatrow}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+                   <span class="s2">&quot;\end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;</span><span class="se">\\</span><span class="s2">end</span><span class="si">{tabular}</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> \
+               <span class="s2">&quot;\end</span><span class="si">{center}</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_show_tk_window</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+        <span class="n">root</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Tk</span><span class="p">()</span>
+        <span class="n">text_tk</span> <span class="o">=</span> <span class="n">tk</span><span class="o">.</span><span class="n">Text</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">wrap</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">WORD</span><span class="p">)</span>
+        <span class="n">text_tk</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="n">text</span><span class="p">)</span>
+        <span class="n">text_tk</span><span class="o">.</span><span class="n">pack</span><span class="p">(</span><span class="n">expand</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">YES</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="n">tk</span><span class="o">.</span><span class="n">BOTH</span><span class="p">)</span>
+        <span class="c1"># ctrl+A does not mean selecting all automatically, that&#39;s why i make it by myself</span>
+
+        <span class="k">def</span> <span class="nf">select_all</span><span class="p">(</span><span class="n">event</span><span class="p">):</span>
+            <span class="n">event</span><span class="o">.</span><span class="n">widget</span><span class="o">.</span><span class="n">tag_add</span><span class="p">(</span><span class="n">tk</span><span class="o">.</span><span class="n">SEL</span><span class="p">,</span> <span class="s1">&#39;1.0&#39;</span><span class="p">,</span> <span class="n">tk</span><span class="o">.</span><span class="n">END</span><span class="p">)</span>
+            <span class="k">return</span> <span class="s1">&#39;break&#39;</span>
+        <span class="n">text_tk</span><span class="o">.</span><span class="n">bind</span><span class="p">(</span><span class="s1">&#39;&lt;Control-a&gt;&#39;</span><span class="p">,</span> <span class="n">select_all</span><span class="p">)</span>
+        <span class="n">root</span><span class="o">.</span><span class="n">mainloop</span><span class="p">()</span></div>
+
+
+<span class="k">def</span> <span class="nf">_safe_get</span><span class="p">(</span><span class="n">lst</span><span class="p">:</span> <span class="n">Tuple</span><span class="p">,</span> <span class="n">i</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">default</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">lst</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">lst</span><span class="p">)</span> <span class="k">else</span> <span class="n">default</span>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Lab_cheat 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">lab_cheat.table</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Andrey.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>
