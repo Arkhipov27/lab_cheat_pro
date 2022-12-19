@@ -17,7 +17,6 @@ def doc_of_function(function, cls: bool = False):
 
     with open('doc_file.txt', 'r') as file:
         doc_list = file.readlines()
-        print(doc_list)
         description = ''
         values = []
         k = 0
