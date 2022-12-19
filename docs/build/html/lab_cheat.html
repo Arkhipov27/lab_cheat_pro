@@ -49,8 +49,148 @@
 <section id="submodules">
 <h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading">¶</a></h2>
 </section>
-<section id="lab-cheat-advanced-functions-module">
-<h2>lab_cheat.advanced_functions module<a class="headerlink" href="#lab-cheat-advanced-functions-module" title="Permalink to this heading">¶</a></h2>
+<section id="module-lab_cheat.advanced_functions">
+<span id="lab-cheat-advanced-functions-module"></span><h2>lab_cheat.advanced_functions module<a class="headerlink" href="#module-lab_cheat.advanced_functions" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.curve_fit">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">curve_fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">p0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">Sequence</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#curve_fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.curve_fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes curve function approximation. Unfortunately, ignores x.err()</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – the function we want to approximate</p></li>
+<li><p><strong>x</strong> – an array on x-axis</p></li>
+<li><p><strong>y</strong> – an array on y-axis</p></li>
+<li><p><strong>p0</strong> – parameter to curve_fit</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>coefficients of approximated curve</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.fmax">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">fmax</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.Var" title="lab_cheat.var.Var"><span class="pre">Var</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.Var" title="lab_cheat.var.Var"><span class="pre">Var</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#fmax"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.fmax" title="Permalink to this definition">¶</a></dt>
+<dd><p>fmax is for very accurate search of maximum of known graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – function to maximize</p></li>
+<li><p><strong>x0</strong> – dot near maximum</p></li>
+<li><p><strong>x</strong> – to find the error accurately</p></li>
+<li><p><strong>y</strong> – to find the error accurately</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>x_max</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.fmin">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">fmin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.Var" title="lab_cheat.var.Var"><span class="pre">Var</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.Var" title="lab_cheat.var.Var"><span class="pre">Var</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#fmin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.fmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>fmin is for very accurate search of minimum of known graph</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – function to minimize</p></li>
+<li><p><strong>x0</strong> – dot near minimum</p></li>
+<li><p><strong>x</strong> – to find the error accurately</p></li>
+<li><p><strong>y</strong> – to find the error accurately</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>x_min</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.prototype">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">prototype</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">XL</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zero_in_corner</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#prototype"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.prototype" title="Permalink to this definition">¶</a></dt>
+<dd><p>Draws the graph of data from excel-file</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>XL</strong> – data from excel-file</p></li>
+<li><p><strong>zero_in_corner</strong> – check if the corner of the table is empty</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.sigma">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">sigma</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">variable</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Sequence</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#sigma"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.sigma" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates standard deviation of values in variable</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>variable</strong> – a variable</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>sqrt from the variance</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.slicer">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">slicer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">var</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">left_val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">right_val</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">excluding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">SupportsFloat</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#slicer"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.slicer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes list of indexes of variables which value is between given borders except the nearest vars to numbers in
+exluding list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>var</strong> – GroupVar that contains variables</p></li>
+<li><p><strong>left_val</strong> – left border. If None then -infinity.</p></li>
+<li><p><strong>right_val</strong> – right border. If None then +infinity.</p></li>
+<li><p><strong>excluding</strong> – If None then []</p></li>
+</ul>
+</dd>
+</dl>
+<p>Ex:
+&gt;&gt;&gt; v = GroupVar(range(10), 0)
+&gt;&gt;&gt; s = slicer(v, left_val=1.1, right_val=8, excluding=[3.1, 6.3, 0])
+&gt;&gt;&gt; v[s].val()
+[2.0, 4.0, 5.0, 7.0, 8.0]</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.smoothing">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">smoothing</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">smooth_factor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#smoothing"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.smoothing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Smoothing of the function</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> – an array on x-axis</p></li>
+<li><p><strong>y</strong> – an array on y-axis</p></li>
+<li><p><strong>smooth_factor</strong> – smooth_factor in _UnivariateSpline</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>smoothing function</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="lab_cheat.advanced_functions.sorting">
+<span class="sig-prename descclassname"><span class="pre">lab_cheat.advanced_functions.</span></span><span class="sig-name descname"><span class="pre">sorting</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><a class="reference internal" href="#lab_cheat.var.GroupVar" title="lab_cheat.var.GroupVar"><span class="pre">GroupVar</span></a><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="reference internal" href="_modules/lab_cheat/advanced_functions.html#sorting"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#lab_cheat.advanced_functions.sorting" title="Permalink to this definition">¶</a></dt>
+<dd><p>!!! x and y must be the same type !!!
+Sorts pairs of data to make xt raising</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>the same types as x and y.</p>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-lab_cheat.calculus_functions">
 <span id="lab-cheat-calculus-functions-module"></span><h2>lab_cheat.calculus_functions module<a class="headerlink" href="#module-lab_cheat.calculus_functions" title="Permalink to this heading">¶</a></h2>
@@ -546,7 +686,7 @@ the next digit. Else the method rounds values and errors up to the first signifi
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>str_val</strong> – a value in string format</p></li>
 <li><p><strong>str_err</strong> – an error in string format</p></li>
-<li><p><strong>accuracy</strong> – None</p></li>
+<li><p><strong>accuracy</strong> – accuracy</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -639,7 +779,17 @@ If error is zero, there won’t be shown digits having the same order as 5% valu
     <ul>
 <li><a class="reference internal" href="#">lab_cheat package</a><ul>
 <li><a class="reference internal" href="#submodules">Submodules</a></li>
-<li><a class="reference internal" href="#lab-cheat-advanced-functions-module">lab_cheat.advanced_functions module</a></li>
+<li><a class="reference internal" href="#module-lab_cheat.advanced_functions">lab_cheat.advanced_functions module</a><ul>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.curve_fit"><code class="docutils literal notranslate"><span class="pre">curve_fit()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.fmax"><code class="docutils literal notranslate"><span class="pre">fmax()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.fmin"><code class="docutils literal notranslate"><span class="pre">fmin()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.prototype"><code class="docutils literal notranslate"><span class="pre">prototype()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.sigma"><code class="docutils literal notranslate"><span class="pre">sigma()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.slicer"><code class="docutils literal notranslate"><span class="pre">slicer()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.smoothing"><code class="docutils literal notranslate"><span class="pre">smoothing()</span></code></a></li>
+<li><a class="reference internal" href="#lab_cheat.advanced_functions.sorting"><code class="docutils literal notranslate"><span class="pre">sorting()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-lab_cheat.calculus_functions">lab_cheat.calculus_functions module</a><ul>
 <li><a class="reference internal" href="#lab_cheat.calculus_functions.arcch"><code class="docutils literal notranslate"><span class="pre">arcch()</span></code></a></li>
 <li><a class="reference internal" href="#lab_cheat.calculus_functions.arccos"><code class="docutils literal notranslate"><span class="pre">arccos()</span></code></a></li>
