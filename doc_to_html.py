@@ -1,4 +1,4 @@
-import lab_cheat
+import lab_cheat.plot
 
 
 def doc_of_function(function, cls: bool = False):
@@ -17,15 +17,17 @@ def doc_of_function(function, cls: bool = False):
 
     with open('doc_file.txt', 'r') as file:
         doc_list = file.readlines()
+        print(doc_list)
         description = ''
         values = []
         k = 0
         for i in range(1, len(doc_list) - 1):
-            if doc_list[i][shift + 4] != ':':
-                description += doc_list[i]
-            elif doc_list[i][shift + 4] == ':':
-                k += 1
-                values.append(doc_list[i].split(':'))
+            if doc_list[i] != '\n':
+                if doc_list[i][shift + 4] != ':':
+                    description += doc_list[i]
+                elif doc_list[i][shift + 4] == ':':
+                    k += 1
+                    values.append(doc_list[i].split(':'))
         for j in range(k):
             values[j][1] = values[j][1].capitalize()
             values[j][2] = values[j][2][1:]
