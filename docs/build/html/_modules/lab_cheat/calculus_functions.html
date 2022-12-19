@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lab_cheat.calculus_functions &#8212; Lab_cheat 1.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/classic.css" />
+    
+    <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/sphinx_highlight.js"></script>
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Lab_cheat 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">lab_cheat.calculus_functions</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for lab_cheat.calculus_functions</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="kn">import</span> <span class="n">add</span>
+<span class="kn">from</span> <span class="nn">.var</span> <span class="kn">import</span> <span class="n">Var</span><span class="p">,</span> <span class="n">GroupVar</span>
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+
+<span class="k">def</span> <span class="nf">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">name_func_for_sympy</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                   <span class="n">real_name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;This function helps to make functions of one variable&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name_func_for_numpy</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">name_func_for_numpy</span> <span class="o">=</span> <span class="n">name_func_for_sympy</span>
+    <span class="k">if</span> <span class="n">real_name</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">real_name</span> <span class="o">=</span> <span class="n">name_func_for_sympy</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">GroupVar</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">GroupVar</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">_all_funcs</span><span class="p">[</span><span class="n">real_name</span><span class="p">](</span><span class="n">var</span><span class="p">)</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">x</span><span class="p">))</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Var</span><span class="p">(</span><span class="nb">getattr</span><span class="p">(</span><span class="n">sp</span><span class="p">,</span> <span class="n">name_func_for_sympy</span><span class="p">)(</span><span class="n">x</span><span class="o">.</span><span class="n">_story</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="nb">getattr</span><span class="p">(</span><span class="n">np</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="p">)(</span><span class="n">x</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="sqrt"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.sqrt">[docs]</a><span class="k">def</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;sqrt&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sin"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.sin">[docs]</a><span class="k">def</span> <span class="nf">sin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;sin&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cos"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.cos">[docs]</a><span class="k">def</span> <span class="nf">cos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="tg"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.tg">[docs]</a><span class="k">def</span> <span class="nf">tg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;tan&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;tg&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ctg"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.ctg">[docs]</a><span class="k">def</span> <span class="nf">ctg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Var</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="o">.</span><span class="n">_story</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">GroupVar</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;ctg&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;ctg&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">tan</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arctg"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arctg">[docs]</a><span class="k">def</span> <span class="nf">arctg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;atan&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arctan&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arctg&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arcctg"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arcctg">[docs]</a><span class="k">def</span> <span class="nf">arcctg</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">Var</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">Var</span><span class="p">(</span><span class="n">sp</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">atan</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">_story</span><span class="p">))</span>
+    <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">GroupVar</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;ctg&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arcctg&#39;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">/</span> <span class="mi">2</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arcsin"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arcsin">[docs]</a><span class="k">def</span> <span class="nf">arcsin</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;asin&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arcsin&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arcsin&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arccos"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arccos">[docs]</a><span class="k">def</span> <span class="nf">arccos</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;acos&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arccos&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arccos&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="sh"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.sh">[docs]</a><span class="k">def</span> <span class="nf">sh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;sinh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;sh&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ch"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.ch">[docs]</a><span class="k">def</span> <span class="nf">ch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;cosh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;ch&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="th"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.th">[docs]</a><span class="k">def</span> <span class="nf">th</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;tanh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;th&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="cth"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.cth">[docs]</a><span class="k">def</span> <span class="nf">cth</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">GroupVar</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;cth&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;cth&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="n">th</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arcth"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arcth">[docs]</a><span class="k">def</span> <span class="nf">arcth</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;atanh&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arctanh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arcth&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arcsh"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arcsh">[docs]</a><span class="k">def</span> <span class="nf">arcsh</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;asinh&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arcsinh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arcsh&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="arcch"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.arcch">[docs]</a><span class="k">def</span> <span class="nf">arcch</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;acosh&#39;</span><span class="p">,</span> <span class="n">name_func_for_numpy</span><span class="o">=</span><span class="s1">&#39;arccosh&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;arcch&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="exp"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.exp">[docs]</a><span class="k">def</span> <span class="nf">exp</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ln"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.ln">[docs]</a><span class="k">def</span> <span class="nf">ln</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">_mono_function</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s1">&#39;log&#39;</span><span class="p">,</span> <span class="n">real_name</span><span class="o">=</span><span class="s1">&#39;ln&#39;</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="mean"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.mean">[docs]</a><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">GroupVar</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">reduce</span><span class="p">(</span><span class="n">add</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span><span class="o">/</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)</span></div>
+
+
+<span class="n">_all_funcs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;sqrt&#39;</span><span class="p">:</span> <span class="n">sqrt</span><span class="p">,</span> <span class="s1">&#39;sin&#39;</span><span class="p">:</span> <span class="n">sin</span><span class="p">,</span> <span class="s1">&#39;cos&#39;</span><span class="p">:</span> <span class="n">cos</span><span class="p">,</span> <span class="s1">&#39;tg&#39;</span><span class="p">:</span> <span class="n">tg</span><span class="p">,</span> <span class="s1">&#39;ctg&#39;</span><span class="p">:</span> <span class="n">ctg</span><span class="p">,</span> <span class="s1">&#39;arctg&#39;</span><span class="p">:</span> <span class="n">arctg</span><span class="p">,</span> <span class="s1">&#39;arcctg&#39;</span><span class="p">:</span> <span class="n">arcctg</span><span class="p">,</span>
+              <span class="s1">&#39;arcsin&#39;</span><span class="p">:</span> <span class="n">arcsin</span><span class="p">,</span> <span class="s1">&#39;arccos&#39;</span><span class="p">:</span> <span class="n">arccos</span><span class="p">,</span> <span class="s1">&#39;sh&#39;</span><span class="p">:</span> <span class="n">sh</span><span class="p">,</span> <span class="s1">&#39;ch&#39;</span><span class="p">:</span> <span class="n">ch</span><span class="p">,</span> <span class="s1">&#39;th&#39;</span><span class="p">:</span> <span class="n">th</span><span class="p">,</span> <span class="s1">&#39;cth&#39;</span><span class="p">:</span> <span class="n">cth</span><span class="p">,</span> <span class="s1">&#39;arcth&#39;</span><span class="p">:</span> <span class="n">arcth</span><span class="p">,</span>
+              <span class="s1">&#39;arcsh&#39;</span><span class="p">:</span> <span class="n">arcch</span><span class="p">,</span> <span class="s1">&#39;exp&#39;</span><span class="p">:</span> <span class="n">exp</span><span class="p">,</span> <span class="s1">&#39;ln&#39;</span><span class="p">:</span> <span class="n">ln</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">:</span> <span class="n">mean</span><span class="p">}</span>
+
+<div class="viewcode-block" id="step"><a class="viewcode-back" href="../../lab_cheat.html#lab_cheat.calculus_functions.step">[docs]</a><span class="k">def</span> <span class="nf">step</span><span class="p">(</span><span class="n">x</span><span class="p">:</span> <span class="n">GroupVar</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Gives just a difference between variables (xt[i]-xt[i-1]).</span>
+<span class="sd">    Sometimes it&#39;s better to use &#39;mnk&#39;&quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">GroupVar</span><span class="p">(</span><span class="nb">tuple</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">-</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))))</span></div>
+</pre></div>
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Lab_cheat 1.0 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">lab_cheat.calculus_functions</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022, Andrey.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.3.0.
+    </div>
+  </body>
+</html>

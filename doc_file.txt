@@ -1,0 +1,12 @@
+
+    This method builds mnk through the point (0, 0)
+
+    :param x: the sequence of points on x-axis
+    :param y: the sequence of points on y-axis
+    :param figure: the spot where the fpath will display
+    :param colour: colour of the line
+    :param line_style: style of the line
+    :param label: the inscription that will reflect in the legend
+
+    :return: coefficient of the straight
+    
